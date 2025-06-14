@@ -14,6 +14,11 @@ export const metadata: Metadata = {
   title: "TaskMaster - Your Personal Task Management Solution",
   description: "A modern, intuitive task management application built with Clerk, and Next.js. Stay organized, meet deadlines, and boost your productivity.",
   keywords: "task management, productivity, organization, todo list, project management",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-32x32.png",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
