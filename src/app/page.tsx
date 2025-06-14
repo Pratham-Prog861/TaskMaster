@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import Cta from "@/components/Cta";
 import Footer from "@/components/Footer";
+import WhyBuilding from "@/components/WhyBuilding";
 
 export default function LandingPage() {
   return (
@@ -14,6 +15,9 @@ export default function LandingPage() {
 
       {/* Features Section */}
       <Features />
+
+      {/* Why I'm Building This Section */}
+      <WhyBuilding />
 
       {/* CTA Section */}
       <Cta />

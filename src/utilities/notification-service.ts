@@ -1,5 +1,6 @@
 'use client';
 
+
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -16,10 +17,8 @@ class NotificationService {
   private audio: HTMLAudioElement | null = null;
   private notificationSound: string = '/notification-sound.mp3';
   private isSystemNotificationSupported: boolean = false;
-
-  constructor() {
-    // Remove browser-specific code from constructor
-  }
+  private swRegistration: ServiceWorkerRegistration | null = null;
+  private publicVapidKey: string | null = null;
 
   private async checkSystemNotificationSupport() {
     if (typeof window === 'undefined') return;
@@ -28,6 +27,58 @@ class NotificationService {
     if (this.isSystemNotificationSupported && Notification.permission === 'default') {
       await Notification.requestPermission();
     }
+  }
+
+  private async registerServiceWorker() {
+    if (typeof window === 'undefined' || !('serviceWorker' in navigator)) return;
+
+    try {
+      this.swRegistration = await navigator.serviceWorker.register('/sw.js');
+      console.log('Service Worker registered successfully:', this.swRegistration);
+    } catch (error) {
+      console.error('Service Worker registration failed:', error);
+    }
+  }
+
+  private async subscribeToNotifications() {
+    if (typeof window === 'undefined' || !this.swRegistration) return;
+
+    // Ensure publicVapidKey is loaded from environment variables and set before subscribing
+    // Example: this.publicVapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+    if (!this.publicVapidKey) {
+ return; // Or handle the case where the key is not available
+    }
+    try {
+      const subscription = await this.swRegistration.pushManager.subscribe({userVisibleOnly: true, applicationServerKey: this.urlBase64ToUint8Array(this.publicVapidKey),
+      });
+
+      await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(subscription),
+      });
+
+      console.log('Subscription successful:', subscription);
+    } catch (error) {
+      console.error('Subscription failed:', error);
+    }
+  }
+
+  private urlBase64ToUint8Array(base64String: string) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+      .replace(/\-/g, '+')
+      .replace(/_/g, '/');
+
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
   }
 
   startNotificationCheck(tasks: Task[]) {
@@ -40,6 +91,10 @@ class NotificationService {
     // Initialize audio and check notification support
     this.audio = new Audio(this.notificationSound);
     this.checkSystemNotificationSupport();
+
+    // Register Service Worker and subscribe to notifications
+    this.registerServiceWorker();
+    this.subscribeToNotifications();
 
     // Check every 30 seconds for more precise timing
     this.checkInterval = setInterval(() => {
