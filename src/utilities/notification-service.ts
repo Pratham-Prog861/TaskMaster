@@ -18,7 +18,7 @@ class NotificationService {
   private notificationSound: string = '/notification-sound.mp3';
   private isSystemNotificationSupported: boolean = false;
   private swRegistration: ServiceWorkerRegistration | null = null;
-  private publicVapidKey: string | null = null;
+  private publicVapidKey: string = process.env.VAPID_PUBLIC_KEY || '';
 
   private async checkSystemNotificationSupport() {
     if (typeof window === 'undefined') return;

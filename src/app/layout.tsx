@@ -11,8 +11,9 @@ import 'react-toastify/dist/ReactToastify.css';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "TaskMaster",
-  description: "A simple task management application built with Clerk, and Next.js",
+  title: "TaskMaster - Your Personal Task Management Solution",
+  description: "A modern, intuitive task management application built with Clerk, and Next.js. Stay organized, meet deadlines, and boost your productivity.",
+  keywords: "task management, productivity, organization, todo list, project management",
 };
 
 export default function RootLayout({
@@ -23,7 +24,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className={inter.className}>
+        <body className={`${inter.className} min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -31,9 +32,24 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <TaskProvider>
-              <Navbar />
-              {children}
-              <ToastContainer />
+              <div className="flex flex-col min-h-screen">
+                <Navbar />
+                <main className="flex-grow">
+                  {children}
+                </main>
+              </div>
+              <ToastContainer 
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
             </TaskProvider>
           </ThemeProvider>
         </body>
