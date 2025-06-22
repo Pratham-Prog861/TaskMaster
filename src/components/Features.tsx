@@ -1,7 +1,6 @@
 import { Bell, Calendar, CheckCircle, Clock, ArrowRight } from 'lucide-react'
 import React from 'react'
 import Link from 'next/link'
-import { Button } from './ui/button'
 
 const Features = () => {
   return (

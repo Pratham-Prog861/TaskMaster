@@ -1,7 +1,7 @@
 import { clerkMiddleware } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
-export default clerkMiddleware((auth, req) => {
+export default clerkMiddleware(() => {
   // Add a header to indicate to the browser that a service worker should be registered
   const response = NextResponse.next();
   response.headers.set('Service-Worker-Allowed', '/'); // Allow service worker to control the root
