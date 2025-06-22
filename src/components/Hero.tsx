@@ -27,13 +27,13 @@ const Hero = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/dashboard">
-              <Button size="lg" className="text-lg px-8 bg-blue-600 hover:bg-blue-700 text-white">
+              <Button size="lg" className="text-lg px-8 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white">
                 Start Managing Tasks
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <Link href="/features">
-              <Button size="lg" variant="outline" className="text-lg px-8">
+              <Button size="lg" variant="outline" className="text-lg px-8 cursor-pointer">
                 Learn More
               </Button>
             </Link>

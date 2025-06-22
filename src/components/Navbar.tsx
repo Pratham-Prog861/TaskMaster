@@ -41,7 +41,7 @@ const Navbar = () => {
             </SignedOut>
             <SignedIn>
               <Link href="/dashboard">
-                <Button variant="ghost" className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                <Button variant="ghost" className="text-gray-700 cursor-pointer dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
                   Dashboard
                 </Button>
               </Link>
