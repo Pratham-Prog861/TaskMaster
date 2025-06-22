@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: "A modern, intuitive task management application built with Clerk, and Next.js. Stay organized, meet deadlines, and boost your productivity.",
   keywords: "task management, productivity, organization, todo list, project management",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon-32x32.png",
     shortcut: "/favicon-32x32.png",
     apple: "/apple-touch-icon.png",
   },
