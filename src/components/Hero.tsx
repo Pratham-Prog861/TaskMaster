@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { Button } from './ui/button'
 import { ArrowRight } from 'lucide-react'
+import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs'
 
 const Hero = () => {
   return (
@@ -26,12 +27,22 @@ const Hero = () => {
             Perfect for individuals and teams.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href="/dashboard">
-              <Button size="lg" className="text-lg px-8 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white">
-                Start Managing Tasks
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <Button size="lg" className="text-lg px-8 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white">
+                  Start Managing Tasks
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </SignInButton>
+            </SignedOut>
+            <SignedIn>
+              <Link href="/dashboard">
+                <Button size="lg" className="text-lg px-8 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white">
+                  Start Managing Tasks
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </SignedIn>
             <Link href="/features">
               <Button size="lg" variant="outline" className="text-lg px-8 cursor-pointer">
                 Learn More
